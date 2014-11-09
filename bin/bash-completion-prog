@@ -1,7 +1,7 @@
 #!perl
 
-our $DATE = '2014-11-07'; # DATE
-our $VERSION = '0.01'; # VERSION
+our $DATE = '2014-11-09'; # DATE
+our $VERSION = '0.02'; # VERSION
 
 use 5.010;
 use strict;
@@ -119,7 +119,7 @@ bash-completion-prog - Add appropriate bash completion command for a program
 
 =head1 VERSION
 
-This document describes version 0.01 of bash-completion-prog (from Perl distribution App-BashCompletionProg), released on 2014-11-07.
+This document describes version 0.02 of bash-completion-prog (from Perl distribution App-BashCompletionProg), released on 2014-11-09.
 
 =head1 SYNOPSIS
 
@@ -151,7 +151,7 @@ commands for programs that it recognizes. Currently it recognizes:
 
 =over
 
-=item * Scripts which are tagged with hints
+=item * Scripts which are tagged with hints of what completion program to use
 
 You can put this in a script, e.g. in a script called C<foo>:
 
@@ -165,6 +165,31 @@ C</etc/bash-completion-prog> (or C<~/.bash-completion-prog>):
 
 Ignore the C<# FRAGMENT ...> or C<# BEGIN FRAGMENT ... # END FRAGMENT> part, it
 is just used to aid in adding or removing the fragment.
+
+=item * Getopt::Long::Complete-based CLI scripts
+
+If a script like C<foo> is detected as a Perl script using
+L<Getopt::Long::Complete>, we know that it can complete itself. Thus,
+C<bash-completion-prog> will add this line:
+
+ complete -C foo foo # FRAGMENT id=foo
+
+=item * Completion scripts which are tagged with hints of what scripts they complete
+
+You can create a completion script in Perl (or other language, actually), e.g.
+C<_foo> and tag it with hints of what scripts they complete, e.g.
+
+ # FRAGMENT id=bash-completion-prog-hints completer=1 for=foo,foo-this-host
+
+This will add this entry to C<bash-completion-prog> file:
+
+ # BEGIN FRAGMENT id=_foo
+ complete -C _foo foo
+ complete -C _foo foo-this-host
+ # END FRAGMENT id=_foo
+
+For an example of completer scripts, see C<App::BashCompleter::*> modules like
+C<App::BashCompleter::cpanm>.
 
 =item * Perinci::CmdLine-based CLI scripts
 
@@ -270,6 +295,18 @@ C<--disable> and C<--enable> options.
 B<bash-completion> package, http://bash-completion.alioth.debian.org/
 
 L<Dist::Zilla::Plugin::Rinci::InstallCompletion>
+
+=head1 BASH COMPLETION
+
+This script has bash completion capability.
+
+To activate bash completion for this script, put:
+
+ complete -C bash-completion-prog bash-completion-prog
+
+in your bash startup (e.g. C<~/.bashrc>). Your next shell session will then recognize tab completion for the command. Or, you can also directly execute the line above in your shell to activate immediately.
+
+You can also install L<App::BashCompletionProg> which makes it easy to add completion for Perinci::CmdLine-based scripts. Just execute C<bash-completion-prog> and the C<complete> command will be added in your C<~/.bash-completion-prog>. Your next shell session will then recognize tab completion for the command.
 
 =head1 HOMEPAGE
 

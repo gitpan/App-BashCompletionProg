@@ -10,7 +10,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '6.30'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141170'
+generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141520'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -33,7 +33,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=App-BashCompletionProg
   homepage: https://metacpan.org/release/App-BashCompletionProg
   repository: git://github.com/perlancar/perl-App-BashCompletionProg.git
-version: '0.01'
+version: '0.02'
 x_Dist_Zilla:
   perl:
     version: '5.018002'
@@ -118,6 +118,10 @@ x_Dist_Zilla:
       name: '@Author::PERLANCAR/MetaConfig'
       version: '5.019'
     -
+      class: Dist::Zilla::Plugin::Rinci::InstallCompletion
+      name: '@Author::PERLANCAR/Rinci::InstallCompletion'
+      version: '0.02'
+    -
       class: Dist::Zilla::Plugin::OurDate
       name: '@Author::PERLANCAR/OurDate'
       version: '0.01'
@@ -186,6 +190,10 @@ x_Dist_Zilla:
               name: '@Author::PERLANCAR/postlude'
               version: '4.006'
             -
+              class: Pod::Weaver::Section::BashCompletion::PerinciCmdLine
+              name: '@Author::PERLANCAR/BashCompletion::PerinciCmdLine'
+              version: '0.02'
+            -
               class: Pod::Weaver::Section::Homepage::DefaultCPAN
               name: '@Author::PERLANCAR/Homepage::DefaultCPAN'
               version: '0.02'
@@ -245,7 +253,7 @@ x_Dist_Zilla:
           script_finder:
             - ':ExecFiles'
       name: '@Author::PERLANCAR/Test::Compile'
-      version: '2.040'
+      version: '2.043'
     -
       class: Dist::Zilla::Plugin::Test::Rinci
       name: '@Author::PERLANCAR/Test::Rinci'

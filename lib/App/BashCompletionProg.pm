@@ -1,7 +1,7 @@
 package App::BashCompletionProg;
 
-our $DATE = '2014-11-07'; # DATE
-our $VERSION = '0.01'; # VERSION
+our $DATE = '2014-11-09'; # DATE
+our $VERSION = '0.02'; # VERSION
 
 use 5.010001;
 use strict;
@@ -62,14 +62,34 @@ sub _detect_file {
     seek $fh, 0, 0;
     my $content = do { local $/; ~~<$fh> };
 
+    my $qprog = shell_quote($prog);
     if ($content =~
             /^\s*# FRAGMENT id=bash-completion-prog-hints command=(.+?)\s*$/m) {
         return [200, "OK", 1, {
-            "func.command"=>"complete -C ".shell_quote($1)." $prog"}];
-    } elsif ($is_perl_script && $content =~
-                 /^\s*(use|require)\s+Perinci::CmdLine(::Any|::Lite)?/m) {
+            "func.command"=>"complete -C ".shell_quote($1)." $qprog",
+            "func.note"=>"hint",
+        }];
+    } elsif ($content =~
+            /^\s*# FRAGMENT id=bash-completion-prog-hints completer=1 for=(.+?)\s*$/m) {
         return [200, "OK", 1, {
-            "func.command"=>"complete -C $prog $prog"}];
+            "func.command"=>join(
+                "; ",
+                map {"complete -C $qprog ".shell_quote($_)} split(',',$1)
+            ),
+            "func.note"=>"hint(completer)",
+        }];
+    } elsif ($is_perl_script && $content =~
+                 /^\s*(use|require)\s+(Perinci::CmdLine(?:::Any|::Lite)?)\b/m) {
+        return [200, "OK", 1, {
+            "func.command"=>"complete -C $qprog $qprog",
+            "func.note"=>$2,
+        }];
+    } elsif ($is_perl_script && $content =~
+                 /^\s*(use|require)\s+(Getopt::Long::Complete)\b/m) {
+        return [200, "OK", 1, {
+            "func.command"=>"complete -C $qprog $qprog",
+            "func.note"=>$2,
+        }];
     }
     [200, "OK", 0];
 }
@@ -141,7 +161,8 @@ sub _add {
 
         my $insres = Text::Fragment::insert_fragment(
             text=>$content, id=>$prog,
-            payload=>$detectres->[3]{'func.command'});
+            payload=>$detectres->[3]{'func.command'},
+            ((attrs=>{note=>$detectres->[3]{'func.note'}}) x !!$detectres->[3]{'func.note'}));
         $envres->add_result($insres->[0], $insres->[1],
                             {item_id=>$prog0});
         next if $insres->[0] == 304;
@@ -209,7 +230,7 @@ sub _list {
     my @res;
     for (@{ $res->[2]{parsed} }) {
         if ($args{detail}) {
-            push @res, {id=>$_->{id}, payload=>$_->{payload}};
+            push @res, {id=>$_->{id}, payload=>$_->{payload}, note=>$_->{attrs}{note}};
         } else {
             push @res, $_->{id};
         }
@@ -249,7 +270,7 @@ App::BashCompletionProg - Backend for bash-completion-prog script
 
 =head1 VERSION
 
-This document describes version 0.01 of App::BashCompletionProg (from Perl distribution App-BashCompletionProg), released on 2014-11-07.
+This document describes version 0.02 of App::BashCompletionProg (from Perl distribution App-BashCompletionProg), released on 2014-11-09.
 
 =head1 HOMEPAGE
 
