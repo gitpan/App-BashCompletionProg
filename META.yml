@@ -33,7 +33,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=App-BashCompletionProg
   homepage: https://metacpan.org/release/App-BashCompletionProg
   repository: git://github.com/perlancar/perl-App-BashCompletionProg.git
-version: '0.02'
+version: '0.03'
 x_Dist_Zilla:
   perl:
     version: '5.018002'
@@ -120,7 +120,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Rinci::InstallCompletion
       name: '@Author::PERLANCAR/Rinci::InstallCompletion'
-      version: '0.02'
+      version: '0.03'
     -
       class: Dist::Zilla::Plugin::OurDate
       name: '@Author::PERLANCAR/OurDate'
@@ -190,9 +190,13 @@ x_Dist_Zilla:
               name: '@Author::PERLANCAR/postlude'
               version: '4.006'
             -
+              class: Pod::Weaver::Section::BashCompletion::GetoptLongComplete
+              name: '@Author::PERLANCAR/BashCompletion::GetoptLongComplete'
+              version: '0.01'
+            -
               class: Pod::Weaver::Section::BashCompletion::PerinciCmdLine
               name: '@Author::PERLANCAR/BashCompletion::PerinciCmdLine'
-              version: '0.02'
+              version: '0.03'
             -
               class: Pod::Weaver::Section::Homepage::DefaultCPAN
               name: '@Author::PERLANCAR/Homepage::DefaultCPAN'
