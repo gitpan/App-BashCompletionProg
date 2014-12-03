@@ -1,7 +1,7 @@
 package App::BashCompletionProg;
 
-our $DATE = '2014-11-17'; # DATE
-our $VERSION = '0.03'; # VERSION
+our $DATE = '2014-12-03'; # DATE
+our $VERSION = '0.04'; # VERSION
 
 use 5.010001;
 use strict;
@@ -64,13 +64,15 @@ sub _detect_file {
 
     my $qprog = shell_quote($prog);
     if ($content =~
-            /^\s*# FRAGMENT id=bash-completion-prog-hints command=(.+?)\s*$/m) {
+            /^\s*# FRAGMENT id=bash-completion-prog-hints command=(.+?)\s*$/m
+                && $content !~ /^\s*# FRAGMENT id=bash-completion-prog-nohint\s*$/m) {
         return [200, "OK", 1, {
             "func.command"=>"complete -C ".shell_quote($1)." $qprog",
             "func.note"=>"hint",
         }];
     } elsif ($content =~
-            /^\s*# FRAGMENT id=bash-completion-prog-hints completer=1 for=(.+?)\s*$/m) {
+            /^\s*# FRAGMENT id=bash-completion-prog-hints completer=1 for=(.+?)\s*$/m
+                && $content !~ /^\s*# FRAGMENT id=bash-completion-prog-nohint\s*$/m) {
         return [200, "OK", 1, {
             "func.command"=>join(
                 "; ",
@@ -134,7 +136,7 @@ sub _add {
                                 {item_id=>$prog0});
             next PROG;
         }
-        $log->debugf("Detection result %s: %s", $prog, $detectres);
+        $log->debugf("Detection result for '%s': %s", $prog, $detectres);
         if (!$detectres->[2]) {
             # we simply ignore undetected programs
             next PROG;
@@ -270,7 +272,7 @@ App::BashCompletionProg - Backend for bash-completion-prog script
 
 =head1 VERSION
 
-This document describes version 0.03 of App::BashCompletionProg (from Perl distribution App-BashCompletionProg), released on 2014-11-17.
+This document describes version 0.04 of App::BashCompletionProg (from Perl distribution App-BashCompletionProg), released on 2014-12-03.
 
 =head1 HOMEPAGE
 

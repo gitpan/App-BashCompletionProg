@@ -1,7 +1,8 @@
 #!perl
 
-our $DATE = '2014-11-17'; # DATE
-our $VERSION = '0.03'; # VERSION
+our $DATE = '2014-12-03'; # DATE
+our $VERSION = '0.04'; # VERSION
+# FRAGMENT id=bash-completion-prog-nohint
 
 use 5.010;
 use strict;
@@ -120,7 +121,7 @@ bash-completion-prog - Add appropriate bash completion command for a program
 
 =head1 VERSION
 
-This document describes version 0.03 of bash-completion-prog (from Perl distribution App-BashCompletionProg), released on 2014-11-17.
+This document describes version 0.04 of bash-completion-prog (from Perl distribution App-BashCompletionProg), released on 2014-12-03.
 
 =head1 SYNOPSIS
 
@@ -297,9 +298,11 @@ B<bash-completion> package, http://bash-completion.alioth.debian.org/
 
 L<Dist::Zilla::Plugin::Rinci::InstallCompletion>
 
-=head1 BASH COMPLETION
+=head1 COMPLETION
 
-This script has bash completion capability.
+This script has shell tab completion capability with support for several shells.
+
+=head2 bash
 
 To activate bash completion for this script, put:
 
@@ -308,6 +311,32 @@ To activate bash completion for this script, put:
 in your bash startup (e.g. C<~/.bashrc>). Your next shell session will then recognize tab completion for the command. Or, you can also directly execute the line above in your shell to activate immediately.
 
 You can also install L<App::BashCompletionProg> which makes it easy to add completion for Perinci::CmdLine-based scripts. After you install the module and put C<. ~/.bash-complete-prog> (or C<. /etc/bash-complete-prog>), you can just run C<bash-completion-prog> and the C<complete> command will be added to your C<~/.bash-completion-prog>. Your next shell session will then recognize tab completion for the command.
+
+=head2 fish
+
+To activate fish completion for this script, execute:
+
+ begin; set -lx COMP_SHELL fish; set -lx COMP_MODE gen_command; bash-completion-prog; end > $HOME/.config/fish/completions/bash-completion-prog.fish
+
+Or if you want to install globally, you can instead write the generated script to C</etc/fish/completions/bash-completion-prog.fish> or C</usr/share/fish/completions/bash-completion-prog.fish>. The exact path might be different on your system. Please check your C<fish_complete_path> variable.
+
+=head2 tcsh
+
+To activate tcsh completion for this script, put:
+
+ complete bash-completion-prog 'p/*/`bash-completion-prog`/'
+
+in your tcsh startup (e.g. C<~/.tcshrc>). Your next shell session will then recognize tab completion for the command. Or, you can also directly execute the line above in your shell to activate immediately.
+
+=head2 zsh
+
+To activate zsh completion for this script, put:
+
+ _bash_completion_prog() { read -l; local cl="$REPLY"; read -ln; local cp="$REPLY"; reply=(`COMP_SHELL=zsh COMP_LINE="$cl" COMP_POINT="$cp" bash-completion-prog`) }
+
+ compctl -K _bash_completion_prog bash-completion-prog
+
+in your zsh startup (e.g. C<~/.zshrc>). Your next shell session will then recognize tab completion for the command. Or, you can also directly execute the line above in your shell to activate immediately.
 
 =head1 HOMEPAGE
 

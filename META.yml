@@ -10,7 +10,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '6.30'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141520'
+generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141170'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -33,7 +33,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=App-BashCompletionProg
   homepage: https://metacpan.org/release/App-BashCompletionProg
   repository: git://github.com/perlancar/perl-App-BashCompletionProg.git
-version: '0.03'
+version: '0.04'
 x_Dist_Zilla:
   perl:
     version: '5.018002'
@@ -178,9 +178,9 @@ x_Dist_Zilla:
               name: FUNCTIONS
               version: '4.006'
             -
-              class: Pod::Weaver::Plugin::Perinci
-              name: '@Author::PERLANCAR/Perinci'
-              version: '0.15'
+              class: Pod::Weaver::Plugin::Rinci
+              name: '@Author::PERLANCAR/Rinci'
+              version: '0.20'
             -
               class: Pod::Weaver::Section::Leftovers
               name: '@Author::PERLANCAR/Leftovers'
@@ -190,13 +190,13 @@ x_Dist_Zilla:
               name: '@Author::PERLANCAR/postlude'
               version: '4.006'
             -
-              class: Pod::Weaver::Section::BashCompletion::GetoptLongComplete
-              name: '@Author::PERLANCAR/BashCompletion::GetoptLongComplete'
-              version: '0.01'
+              class: Pod::Weaver::Section::Completion::GetoptLongComplete
+              name: '@Author::PERLANCAR/Completion::GetoptLongComplete'
+              version: '0.04'
             -
-              class: Pod::Weaver::Section::BashCompletion::PerinciCmdLine
-              name: '@Author::PERLANCAR/BashCompletion::PerinciCmdLine'
-              version: '0.03'
+              class: Pod::Weaver::Section::Completion::PerinciCmdLine
+              name: '@Author::PERLANCAR/Completion::PerinciCmdLine'
+              version: '0.07'
             -
               class: Pod::Weaver::Section::Homepage::DefaultCPAN
               name: '@Author::PERLANCAR/Homepage::DefaultCPAN'
@@ -257,7 +257,7 @@ x_Dist_Zilla:
           script_finder:
             - ':ExecFiles'
       name: '@Author::PERLANCAR/Test::Compile'
-      version: '2.043'
+      version: '2.040'
     -
       class: Dist::Zilla::Plugin::Test::Rinci
       name: '@Author::PERLANCAR/Test::Rinci'

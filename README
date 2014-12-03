@@ -2,8 +2,8 @@ NAME
     App::BashCompletionProg - Backend for bash-completion-prog script
 
 VERSION
-    This document describes version 0.03 of App::BashCompletionProg (from
-    Perl distribution App-BashCompletionProg), released on 2014-11-17.
+    This document describes version 0.04 of App::BashCompletionProg (from
+    Perl distribution App-BashCompletionProg), released on 2014-12-03.
 
 HOMEPAGE
     Please visit the project's homepage at
